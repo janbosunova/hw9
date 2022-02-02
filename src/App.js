@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import Posts from './components/Posts';
 
 function App() {
+  const [posts, setPosts] = useState([])
+
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/photos?_limit=10')
+    .then(res => res.json())
+    .then(posts => {
+      setPosts(posts);
+    });
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='All'>
+      <Posts posts = {posts}/>
+      </div>
     </div>
   );
 }
 
 export default App;
+
